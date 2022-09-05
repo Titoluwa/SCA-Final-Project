@@ -47,7 +47,7 @@ class PostController extends Controller
         $post = Post::create($this->validatePost($request));
         $post->user_id = auth()->user()->id;
         $post->save();
-        return back()->with('added_message', "Your New Post has been created!!");
+        return back()->with('success', "Your New Post has been created!!");
     }
 
     public function show($id)
@@ -71,6 +71,6 @@ class PostController extends Controller
     {
         $post = Post::findorFail($id);
         $post->delete();
-        return back()->with('delete_message', "POST has been Deleted!!");
+        return back()->with('error', "POST has been Deleted!!");
     }
 }

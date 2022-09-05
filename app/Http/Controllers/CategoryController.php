@@ -28,7 +28,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $category = Category::create($this->validateCategory($request));
-        return back()->with('added_message', "New CATEGORY created!!");
+        return back()->with('success', "New CATEGORY created!!");
     }
     public function destroy($id)
     {
@@ -36,6 +36,6 @@ class CategoryController extends Controller
         $category = Category::findorFail($id);
         // dd($category);
         $category->delete();
-        return back()->with('delete_message', "CATEGORY has been Deleted!!");
+        return back()->with('error', "CATEGORY has been Deleted!!");
     }
 }

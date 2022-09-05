@@ -37,4 +37,4 @@ Route::get('post/create', [PostController::class, 'create'])->name('post.create'
 Route::get('post/{id}', [PostController::class, 'show'])->name('post.show')->middleware(['auth']);
 Route::post('post/store', [PostController::class, 'store'])->name('post.store')->middleware(['auth']);
 
-Route::get('comment/store', [CommentController::class, 'store'])->name('comment.store')->middleware(['auth']);
+Route::post('comment/store', [CommentController::class, 'store'])->name('comment.store')->middleware(['auth']);

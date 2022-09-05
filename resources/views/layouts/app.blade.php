@@ -29,8 +29,14 @@
 
             <!-- Page Content -->
             <main>
+                @include('inc.messages')
                 {{ $slot }}
             </main>
+            
+            <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+            <script>
+                CKEDITOR.replace( 'article-ckeditor' );
+            </script>
         </div>
     </body>
 </html>

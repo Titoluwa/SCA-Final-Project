@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    private function validateTag($request)
+    {
+        return $request->validate([
+            'name' => 'required|string'
+        ]);
+    }
     public function index()
     {
         $tags = Tag::orderBy('id', 'desc')->get();
@@ -15,18 +21,13 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $tag = Tag::create($this->validateTag($request));
-        return back()->with('added_message', "New TAG created!!");
+        return back()->with('success', "New TAG created!!");
     }
     public function destroy($id)
     {
         $tag = Tag::findorFail($id);
         $tag->delete();
-        return back()->with('delete_message', "TAG has been Deleted!!");
+        return back()->with('error', "TAG has been Deleted!!");
     }
-    private function validateTag($request)
-    {
-        return $request->validate([
-            'name' => 'required|string'
-        ]);
-    }
+
 }
