@@ -47,7 +47,7 @@ class PostController extends Controller
         $post = Post::create($this->validatePost($request));
         $post->user_id = auth()->user()->id;
         $post->save();
-        return back()->with('success', "Your New Post has been created!!");
+        return redirect('/posts')->with('success', "Your New Post has been created!!");
     }
 
     public function show($id)
@@ -59,18 +59,28 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        //
+        $post = Post::where('id', $id)->first();
+        $categories = Category::orderBy('name', 'asc')->get();
+        $tags       = Tag::orderBy('name', 'asc')->get();
+        return view('post.edit', compact('post', 'categories', 'tags'));
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::where('id', $id)->first();
+        $post->title = $request->title;
+        $post->subtitle = $request->subtitle;
+        $post->content = $request->content;
+        $post->category_id = $request->category_id;
+        $post->tag_id = $request->tag_id;
+        $post->update();
+        return redirect('/post/'.$post->id)->with('success', "Your Post has been Updated!!");
     }
 
     public function destroy($id)
     {
         $post = Post::findorFail($id);
         $post->delete();
-        return back()->with('error', "POST has been Deleted!!");
+        return back()->with('success', "POST has been Deleted!!");
     }
 }

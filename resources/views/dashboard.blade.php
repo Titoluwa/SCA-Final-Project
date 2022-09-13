@@ -17,7 +17,7 @@
                         </a>
                     </div>
                     {{-- <p class="my-3 mx-96 py-3 text-center bg-green-200 border-2 border-green-600 rounded-md  hover:bg-green-600">View My posts</p> --}}
-                    @if(!empty($posts))
+                    @if(count($posts) > 0)
                         <div class="grid grid-cols-1">
                             @foreach ($posts as $post)
                             <div class="flex m-3 p-4 bg-gray-200 rounded-lg hover:bg-green-100 hover:shadow-xl focus:bg-green-100">
@@ -47,7 +47,7 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="py-8">No Posts Found</p>
+                        <p class="p-3 m-3 text-base font-bold text-green-300 text-center">No Post Found</p>
                     @endif
                 </div>
             </div>

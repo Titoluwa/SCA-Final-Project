@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -35,6 +36,10 @@ Route::delete('category/delete/{$id}', [CategoryController::class, 'destroy'])->
 Route::get('posts', [PostController::class, 'index'])->name('posts')->middleware(['auth']);
 Route::get('post/create', [PostController::class, 'create'])->name('post.create')->middleware(['auth']);
 Route::get('post/{id}', [PostController::class, 'show'])->name('post.show')->middleware(['auth']);
+Route::get('post/edit/{id}', [PostController::class, 'edit'])->name('post.edit')->middleware(['auth']);
+Route::put('post/update/{id}', [PostController::class, 'update'])->name('post.update')->middleware(['auth']);
 Route::post('post/store', [PostController::class, 'store'])->name('post.store')->middleware(['auth']);
 
+
 Route::post('comment/store', [CommentController::class, 'store'])->name('comment.store')->middleware(['auth']);
+Route::delete('post/delete/comment/{$id}', [CommentController::class, 'delete'])->middleware(['auth']);

@@ -36,6 +36,6 @@ class CategoryController extends Controller
         $category = Category::findorFail($id);
         // dd($category);
         $category->delete();
-        return back()->with('error', "CATEGORY has been Deleted!!");
+        return back()->with('success', "CATEGORY has been Deleted!!");
     }
 }

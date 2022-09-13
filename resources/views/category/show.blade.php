@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-green-700 leading-tight">
+        <h2 class="font-semibold text-xl text-green-700 leading-tight font-serif">
             {{ __('Category Post') }}
         </h2>
     </x-slot>
@@ -12,7 +12,7 @@
 
                     <p class="text-center text-green-600 text-2xl font-bold mb-5">Posts from {{$category->name}}</p>
 
-                    @if(!empty($posts))
+                    @if(count($posts) > 0)
                     <div class="grid grid-cols-2 gap-3 m-3">
                         @foreach($posts as $post)
 
@@ -32,7 +32,7 @@
                         @endforeach
                     </div>
                     @else
-                        <p class="py-8">No posts Found</p>
+                        <p class="p-3 m-3 text-base font-bold text-green-300 text-center">No Post Found</p>
                     @endif
                 </div>
             </div>

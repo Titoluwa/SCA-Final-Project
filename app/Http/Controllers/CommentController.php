@@ -16,13 +16,20 @@ class CommentController extends Controller
     {
         //
     }
-
+    private function validateComment($request)
+    {
+        return $request->validate([
+            'post_id' => 'required|integer',
+            'content' => 'required|string',
+            'user_id' => 'required|integer',
+        ]);
+    }
     public function store(Request $request)
     {
         $comment = Comment::create($this->validateComment($request));
         $comment->user_id = auth()->user()->id;
         $comment->save();
-        return back()->with('success', "Your New Comment has been created!!");
+        return back()->with('success', "Your Comment has been added!!");
     }
 
     public function show($id)
@@ -40,8 +47,12 @@ class CommentController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+
+        $comment = Comment::findorFail($id);
+        dd($coment);
+        $comment->delete();
+        return back()->with('successs', "Comment Deleted!!");
     }
 }
