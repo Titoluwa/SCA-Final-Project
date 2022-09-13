@@ -53,8 +53,14 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::where('id', $id)->first();
-
-        return view('post.show', compact('post'));
+        $tags = array();
+        foreach($post->tag_id as $tag)
+        {
+            $tagg = Tag::where('id', $tag)->select('name')->first();
+            array_push($tags, $tagg);
+        }
+        // dd($tags);
+        return view('post.show', compact('post', 'tags'));
     }
 
     public function edit($id)

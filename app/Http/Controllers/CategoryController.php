@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -17,6 +18,8 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('id', 'desc')->get();
+        // $posts = Post::select('category_id', DB::raw('count(*) as total'))->groupBy('category_id')->get();
+        // dd($categories);
         return view('category.index', compact('categories'));
     }
     public function show($id)

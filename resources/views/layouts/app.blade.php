@@ -32,11 +32,19 @@
                 @include('inc.messages')
                 {{ $slot }}
             </main>
-            
-            <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+
+            {{-- <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
             <script>
                 CKEDITOR.replace( 'article-ckeditor' );
+            </script> --}}
+            <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+            <script>
+                ClassicEditor.create( document.querySelector( '#ckeditor' ) )
+                    .catch( error => {
+                        console.error( error );
+                    } );
             </script>
+
         </div>
     </body>
 </html>

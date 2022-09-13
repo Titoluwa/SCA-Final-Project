@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-green-700 leading-tight">
+        <h2 class="font-semibold text-xl text-green-700 leading-tight font-serif">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
@@ -30,10 +30,10 @@
                                         {{$post->subtitle}}
                                         <br> <br>
                                         <div class="space-x-4">
-                                            <a href="post/edit/{{$post->id}}" class="inline-block py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                            <a href="/post/edit/{{$post->id}}" class="inline-block py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                                 Edit
                                             </a>
-                                            <form action="post/delete/{{$post->id}}" method="POST" class="inline-block">
+                                            <form action="/post/delete/{{$post->id}}" method="POST" class="inline-block">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">

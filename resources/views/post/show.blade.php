@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-green-700 leading-tight">
+        <h2 class="font-semibold text-xl text-green-700 leading-tight font-serif">
             {{$post->title}}
         </h2>
     </x-slot>
@@ -11,9 +11,23 @@
                 <div class="p-6 bg-white border-b border-gray-200">
 
                     <p class="text-center text-green-600 text-2xl font-bold mb-3">{{$post->title}}</p>
-                    <p class="text-center text-green-400 text-xl font-medium mb-3">{{$post->subtitle}} </p>
-                    <p class="text-green-800 font-semibold m-3"><a href="/category/{{$post->category_id}}" class="p-2 rounded bg-green-100 hover:bg-green-300">{{$post->category->name}}</a></p>
-                    <p class="text-base text-justify mx-10 m-4">{{$post->content}}</p>
+                    <p class="text-center text-green-400 text-xl font-medium mb-4">{{$post->subtitle}} </p>
+                    <p class="font-medium m-3">
+                        <a href="/category/{{$post->category_id}}" class="p-2 rounded-sm bg-green-100 hover:bg-green-300">{{$post->category->name}}</a>
+                        @foreach ($tags as $tag)
+                            <span class="m-2 p-1 bg-gray-200 rounded-lg">{{$tag->name}}</span>
+                        @endforeach
+                    </p>
+                    <div class="text-base text-justify mx-10 m-4">{!! $post->content !!}</div>
+                    @if($post->user_id == auth()->user()->id)
+                        <div>
+                            <a href="/post/edit/{{$post->id}}" class="float-right mr-5 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                Edit Post
+                            </a>
+                        </div>
+                        <br>
+                        <br>
+                    @endif
                     <p class="text-green-800 text-base font-medium m-3 px-10">Comments:</p>
                     <div>
                         @if(count($post->comments) > 0)

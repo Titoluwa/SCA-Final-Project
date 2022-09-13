@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-green-700 leading-tight">
-            {{ __('New Post') }}
+        <h2 class="font-semibold text-xl text-green-700 leading-tight font-serif">
+            {{ __('Edit Post') }}
         </h2>
     </x-slot>
 
@@ -40,7 +40,7 @@
                         <div class="mt-4">
                             <x-label for="content" :value="__('Content')" class="mb-2" />
 
-                            <textarea name="content" id="article-ckeditor" rows="10" placeholder="What's on your mind?"
+                            <textarea name="content" id="ckeditor" rows="10" placeholder="What's on your mind?"
                                 class="@error('content') is-invalid @enderror w-full outline-none p-2 rounded-md shadow-sm border border-green-300 focus:border-green-300
                                 focus:ring focus:ring-green-200 focus:ring-opacity-50">{{$post->content}}</textarea>
                         </div>
