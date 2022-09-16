@@ -26,12 +26,12 @@ Route::get('dashboard', [PostController::class, 'dashboard'])->name('dashboard')
 
 Route::get('tags', [TagController::class, 'index'])->name('tags')->middleware(['auth']);
 Route::post('tag/store', [TagController::class, 'store'])->name('tag.store')->middleware(['auth']);
-Route::delete('tag/delete/{$id}', [TagController::class, 'destroy'])->name('tag.delete')->middleware(['auth']);
+Route::delete('tag/delete/{id}', [TagController::class, 'destroy'])->name('tag.destroy')->middleware(['auth']);
 
 Route::get('categories', [CategoryController::class, 'index'])->name('categories')->middleware(['auth']);
 Route::get('category/{id}', [CategoryController::class, 'show'])->name('category.show')->middleware(['auth']);
 Route::post('category/store', [CategoryController::class, 'store'])->name('category.store')->middleware(['auth']);
-Route::delete('category/delete/{$id}', [CategoryController::class, 'destroy'])->middleware(['auth']);
+Route::delete('category/delete/{id}', [CategoryController::class, 'destroy'])->middleware(['auth']);
 
 Route::get('posts', [PostController::class, 'index'])->name('posts')->middleware(['auth']);
 Route::get('post/create', [PostController::class, 'create'])->name('post.create')->middleware(['auth']);
@@ -39,7 +39,8 @@ Route::get('post/{id}', [PostController::class, 'show'])->name('post.show')->mid
 Route::get('post/edit/{id}', [PostController::class, 'edit'])->name('post.edit')->middleware(['auth']);
 Route::put('post/update/{id}', [PostController::class, 'update'])->name('post.update')->middleware(['auth']);
 Route::post('post/store', [PostController::class, 'store'])->name('post.store')->middleware(['auth']);
+Route::delete('post/delete/{id}', [PostController::class, 'destroy'])->name('post.destroy')->middleware(['auth']);
 
 
 Route::post('comment/store', [CommentController::class, 'store'])->name('comment.store')->middleware(['auth']);
-Route::delete('post/delete/comment/{$id}', [CommentController::class, 'delete'])->middleware(['auth']);
+Route::delete('post/comment/delete/{id}', [CommentController::class, 'destroy'])->middleware(['auth']);

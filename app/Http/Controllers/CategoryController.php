@@ -18,8 +18,6 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('id', 'desc')->get();
-        // $posts = Post::select('category_id', DB::raw('count(*) as total'))->groupBy('category_id')->get();
-        // dd($categories);
         return view('category.index', compact('categories'));
     }
     public function show($id)
@@ -35,10 +33,8 @@ class CategoryController extends Controller
     }
     public function destroy($id)
     {
-        // dd($id);
         $category = Category::findorFail($id);
-        // dd($category);
         $category->delete();
-        return back()->with('success', "CATEGORY has been Deleted!!");
+        return response()->json(['status'=>"Category Deleted Successfully!"]);
     }
 }

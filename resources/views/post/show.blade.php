@@ -36,21 +36,21 @@
                                     <div class="flex">
                                         <li class="text-base m-2">{{$comment->content}}</li>
                                         @if($comment->user_id == auth()->user()->id)
-                                            <form action="delete/comment/{{$comment->id}}" method="POST">
-                                                @method('DELETE')
+                                            <div class="">
                                                 @csrf
-                                                <button type="submit" class="m-2 py-1 px-2 border border-transparent text-sm font-sm rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                                    delete
+                                                <input type="hidden" class="delete_val" value="{{ $comment->id }}">
+                                                <button type="button" class="delete m-2 py-1 px-2 border border-transparent text-xs font-thin rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                                    <i class="fa fa-trash"></i>
                                                 </button>
-                                            </form>
+                                            </div>
                                         @elseif($post->user_id == auth()->user()->id)
-                                            <form action="delete/comment/{{$comment->id}}" method="POST">
-                                                @method('DELETE')
+                                            <div class="">
                                                 @csrf
-                                                <button type="submit" class="m-2 py-1 px-2 border border-transparent text-sm font-sm rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                                    delete
+                                                <input type="hidden" class="delete_val" value="{{ $comment->id }}">
+                                                <button type="button" class="delete m-2 py-1 px-2 border border-transparent text-xs font-thin rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                                    <i class="fa fa-trash"></i>
                                                 </button>
-                                            </form>
+                                            </div>
                                         @endif
                                     </div>
                                 @endforeach
@@ -80,4 +80,43 @@
             </div>
         </div>
     </div>
+
+    @section('script')
+        <script>
+            $('.delete').click(function(e) {
+                e.preventDefault();
+
+                var delete_id = $(this).closest('div').find('.delete_val').val();
+                swal({
+                    title: "Delete Comment?",
+                    text: "Are you sure you want to delete this Comment?",
+                    icon: "warning",
+                    buttons: ["Cancel","Delete"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": delete_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/post/comment/delete/"+ delete_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    @endsection
+
 </x-app-layout>

@@ -33,13 +33,15 @@
                                             <a href="/post/edit/{{$post->id}}" class="inline-block py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                                 Edit
                                             </a>
-                                            <form action="/post/delete/{{$post->id}}" method="POST" class="inline-block">
-                                                @method('DELETE')
+
+                                            <div class="inline-block">
                                                 @csrf
-                                                <button type="submit" class="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                                <input type="hidden" class="delete_val" value="{{ $post->id }}">
+                                                <input type="hidden" class="postitle" value="{{ $post->title }}">
+                                                <button type="button" class="delete py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" >
                                                     Delete
                                                 </button>
-                                            </form>
+                                            </div>
                                         </div>
                                     </p>
                                 </div>
@@ -53,4 +55,44 @@
             </div>
         </div>
     </div>
+
+    @section('script')
+        <script>
+            $('.delete').click(function(e) {
+                e.preventDefault();
+
+                var delete_id = $(this).closest('div').find('.delete_val').val();
+                var name      = $(this).closest('div').find('.postitle').val();
+                swal({
+                    title: "Delete "+name+"?",
+                    text: "Are you sure you want to delete this Post?",
+                    icon: "warning",
+                    buttons: ["Cancel","Delete"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": delete_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/post/delete/"+ delete_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    @endsection
+
 </x-app-layout>

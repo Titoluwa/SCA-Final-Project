@@ -16,11 +16,12 @@
                                 @foreach ($tags as $tag)
                                     <li class="bg-green-200 m-3 p-2 rounded-xl">
                                         {{$tag->name}}
-                                        <form action="tag/delete/{{$tag->id}}" method="POST" class="float-right mr-3 text-red-500">
-                                            @method('DELETE')
+                                        <div class="float-right mr-3 text-red-500">
                                             @csrf
-                                            <button class="font-bold" type="submit">x</button>
-                                        </form>
+                                            <input type="hidden" class="delete_val" value="{{ $tag->id }}">
+                                            <input type="hidden" class="tagname" value="{{ $tag->name }}">
+                                            <button class="font-bold delete" type="button">x</button>
+                                        </div>
                                     </li>
                                 @endforeach
                             </ol>
@@ -50,4 +51,44 @@
             </div>
         </div>
     </div>
+
+    @section('script')
+        <script>
+            $('.delete').click(function(e) {
+                e.preventDefault();
+
+                var delete_id = $(this).closest('div').find('.delete_val').val();
+                var name      = $(this).closest('div').find('.tagname').val();
+                swal({
+                    title: "Delete "+name+"?",
+                    text: "Are you sure you want to delete this Tag?",
+                    icon: "warning",
+                    buttons: ["Cancel","Delete"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": delete_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/tag/delete/"+ delete_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    @endsection
+
 </x-app-layout>

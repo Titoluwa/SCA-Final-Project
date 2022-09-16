@@ -87,6 +87,6 @@ class PostController extends Controller
     {
         $post = Post::findorFail($id);
         $post->delete();
-        return back()->with('success', "POST has been Deleted!!");
+        return response()->json(['status'=>"Post Deleted Successfully!"]);
     }
 }

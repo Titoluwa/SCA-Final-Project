@@ -15,13 +15,19 @@
                         <ol>
                             @foreach ($categories as $category)
                                 <li class="bg-green-200 m-3 p-2 rounded-xl">
-                                    {{-- <span class=""> {{count($catergory)}}</span> --}}
                                     <a href="category/{{$category->id}}" class="hover:bg-gray-100 rounded-md m-1 p-1">{{$category->name}} <span class="px-2 mx-1 my-1 bg-green-100 rounded-full">{{$category->post_count($category->id)}}</span></a>
-                                    <form action="/category/delete/{{$category->id}}" method="POST" class="float-right mr-3 text-red-400">
+
+                                    <div class="float-right mr-3 text-red-500">
+                                        @csrf
+                                        <input type="hidden" class="delete_val" value="{{ $category->id }}">
+                                        <input type="hidden" class="categoryname" value="{{ $category->name }}">
+                                        <button class="font-bold delete" type="button">x</button>
+                                    </div>
+                                    {{-- <form action="/category/delete/{{$category->id}}" method="POST" class="float-right mr-3 text-red-400">
                                         @method('DELETE')
                                         @csrf
                                         <button class="font-bold hover:text-red-600" type="submit">x</button>
-                                    </form>
+                                    </form> --}}
                                 </li>
                             @endforeach
                         </ol>
@@ -48,4 +54,45 @@
             </div>
         </div>
     </div>
+
+    @section('script')
+        <script>
+            $('.delete').click(function(e) {
+                e.preventDefault();
+
+                var delete_id = $(this).closest('div').find('.delete_val').val();
+                var name      = $(this).closest('div').find('.categoryname').val();
+                swal({
+                    title: "Delete "+name+"?",
+                    text: "Are you sure you want to delete this Category?",
+                    icon: "warning",
+                    buttons: ["Cancel","Delete"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {
+                            "_token": $('input[name=_token]').val(),
+                            "id": delete_id,
+                        }
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/category/delete/"+ delete_id,
+                            data: data,
+                            success: function (response){
+                                swal(response.status, {
+                                    icon: "success",
+                                })
+                                .then((result)=>{
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    @endsection
+
+
 </x-app-layout>
