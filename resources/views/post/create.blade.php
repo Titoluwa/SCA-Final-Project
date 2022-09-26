@@ -19,37 +19,44 @@
                             <div class="">
                                 <x-label for="title" :value="__('Title')" class="mb-2" />
 
-                                <x-input id="title" class="@error('title') is-invalid @enderror mt-1 w-full" type="text" name="title" :value="old('title')" required autofocus />
+                                <x-input id="title" class="@error('title') is-invalid @enderror mt-1 w-full" type="text" name="title" :value="old('title')" autofocus />
+                                @error('title')
+                                    <div class="alert alert-danger text-red-400 italic font-semibold">{{$message}}</div>
+                                @enderror
                             </div>
-                            @error('title')
-                                <div class="alert alert-danger">{{$message}}</div>
-                            @enderror
+
                             <!-- Subtitle -->
                             <div class="">
+
                                 <x-label for="subtitle" :value="__('Subtitle')" class="mb-2" />
 
                                 <x-input id="subtitle" class="@error('subtitle') is-invalid @enderror mt-1 w-full" type="text" name="subtitle" :value="old('subtitle')"/>
+                                @error('subtitle')
+                                    <div class="alert alert-danger text-red-400 italic font-semibold">{{$message}}</div>
+                                @enderror
                             </div>
-                            @error('subtitle')
-                                <div class="alert alert-danger">{{$message}}</div>
-                            @enderror
+
                         </div>
 
                         <!-- Content -->
                         <div class="mt-4">
+                            @error('content')
+                                <div class="alert alert-danger text-red-400 italic font-semibold">{{$message}}</div>
+                            @enderror
                             <x-label for="content" :value="__('Content')" class="mb-2" />
 
                             <textarea name="content" id="ckeditor" rows="10" placeholder="What's on your mind?"
                                 class="@error('content') is-invalid @enderror w-full outline-none p-2 rounded-md shadow-sm border border-green-300 focus:border-green-300
-                                focus:ring focus:ring-green-200 focus:ring-opacity-50">{{old('content')}}</textarea>
+                                focus:ring focus:ring-green-200 focus:ring-opacity-50">{{old('content')}}
+                            </textarea>
                         </div>
-                        @error('content')
-                            <div class="alert alert-danger">{{$message}}</div>
-                        @enderror
 
                         <div class="grid gap-4 grid-cols-2 mt-4">
                             <!-- Category -->
                             <div class="">
+                                @error('category_id')
+                                    <div class="alert alert-danger text-red-400 italic font-semibold">{{$message}}</div>
+                                @enderror
                                 <x-label for="category_id" :value="__('Category')" class="mb-2" />
 
                                 <select name="category_id" id="category_id" class="@error('category_id') is-invalid @enderror w-full outline-none p-2 rounded-md shadow-sm border border-green-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50">
@@ -59,12 +66,13 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @error('category_id')
-                                <div class="alert alert-danger">{{$message}}</div>
-                            @enderror
+
 
                             <!-- Tags -->
                             <div class="">
+                                @error('tag_id')
+                                    <div class="alert alert-danger text-red-400 italic font-semibold">{{$message}}</div>
+                                @enderror
                                 <x-label for="tag_id" :value="__('Tags')" class="mb-2" />
                                 <div class="grid grid-cols-6">
                                     @foreach ($tags as $tag)
@@ -73,9 +81,6 @@
                                     @endforeach
                                 </div>
                             </div>
-                            @error('tag_id')
-                                <div class="alert alert-danger">{{$message}}</div>
-                            @enderror
                         </div>
 
                         <div class="flex items-center justify-end mt-10">

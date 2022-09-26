@@ -25,9 +25,14 @@ class TagController extends Controller
     }
     public function destroy($id)
     {
-        $tag = Tag::find($id);
-        $tag->delete();
-        return response()->json(['status'=>"Tag Deleted Successfully!"]);
+        if(auth()->user()->id != 1)
+        {
+            return back()->with('error', "Access DENIED. You are not authorized to perform this Deletion");
+        }else{
+            $tag = Tag::find($id);
+            $tag->delete();
+            return response()->json(['status'=>"Tag Deleted Successfully!"]);
+        }
     }
 
 }

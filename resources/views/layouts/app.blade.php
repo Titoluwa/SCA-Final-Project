@@ -34,10 +34,6 @@
                 {{ $slot }}
             </main>
 
-            {{-- <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-            <script>
-                CKEDITOR.replace( 'article-ckeditor' );
-            </script> --}}
             <script src="/js/jquery.min.js"></script>
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
             <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>

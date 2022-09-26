@@ -20,7 +20,9 @@
                                             @csrf
                                             <input type="hidden" class="delete_val" value="{{ $tag->id }}">
                                             <input type="hidden" class="tagname" value="{{ $tag->name }}">
-                                            <button class="font-bold delete" type="button">x</button>
+                                            @if(auth()->user()->id == 1)
+                                                <button class="font-bold delete" type="button">x</button>
+                                            @endif
                                         </div>
                                     </li>
                                 @endforeach

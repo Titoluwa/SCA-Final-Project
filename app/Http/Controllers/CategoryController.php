@@ -33,8 +33,19 @@ class CategoryController extends Controller
     }
     public function destroy($id)
     {
-        $category = Category::findorFail($id);
-        $category->delete();
-        return response()->json(['status'=>"Category Deleted Successfully!"]);
+        if(auth()->user()->id != 1)
+        {
+            return back()->with('error', "Access DENIED. You are not authorized to perform this Deletion");
+        }else{
+            $category = Category::findorFail($id);
+            $posts = Post::where('category_id', $id)->get();
+            foreach ($posts as $post)
+            {
+                $post->delete();
+            }
+            $category->delete();
+
+            return response()->json(['status'=>"Category Deleted Successfully!"]);
+        }
     }
 }

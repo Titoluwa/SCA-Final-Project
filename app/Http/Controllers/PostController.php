@@ -35,7 +35,7 @@ class PostController extends Controller
         return $request->validate([
             'user_id' => 'required',
             'title' => 'required|string',
-            'subtitle' => 'string',
+            'subtitle',
             'content' => 'required',
             'category_id' => 'required|integer',
             'tag_id' => 'required'

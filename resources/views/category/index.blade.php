@@ -21,13 +21,10 @@
                                         @csrf
                                         <input type="hidden" class="delete_val" value="{{ $category->id }}">
                                         <input type="hidden" class="categoryname" value="{{ $category->name }}">
-                                        <button class="font-bold delete" type="button">x</button>
+                                        @if(auth()->user()->id == 1)
+                                            <button class="font-bold delete" type="button">x</button>
+                                        @endif
                                     </div>
-                                    {{-- <form action="/category/delete/{{$category->id}}" method="POST" class="float-right mr-3 text-red-400">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button class="font-bold hover:text-red-600" type="submit">x</button>
-                                    </form> --}}
                                 </li>
                             @endforeach
                         </ol>
@@ -64,7 +61,7 @@
                 var name      = $(this).closest('div').find('.categoryname').val();
                 swal({
                     title: "Delete "+name+"?",
-                    text: "Are you sure you want to delete this Category?",
+                    text: "Are you sure? Posts under this Category will also be deleted",
                     icon: "warning",
                     buttons: ["Cancel","Delete"],
                     dangerMode: true,
