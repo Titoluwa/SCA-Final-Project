@@ -33,12 +33,12 @@ class PostController extends Controller
     private function validatePost($request)
     {
         return $request->validate([
-            'user_id' => 'required',
-            'title' => 'required|string',
-            'subtitle',
-            'content' => 'required',
+            'user_id'     => 'required',
+            'title'       => 'required|string',
+            'subtitle'    => 'nullable|string',
+            'content'     => 'required',
             'category_id' => 'required|integer',
-            'tag_id' => 'required'
+            'tag_id'      => 'required'
         ]);
     }
 

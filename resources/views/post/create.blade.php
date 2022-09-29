@@ -62,7 +62,7 @@
                                 <select name="category_id" id="category_id" class="@error('category_id') is-invalid @enderror w-full outline-none p-2 rounded-md shadow-sm border border-green-300 focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50">
                                     <option value="" disabled selected class="text-gray-100">Select  Category</option>
                                     @foreach ($categories as $category)
-                                        <option class="text-green-700 hover:bg-green-100 focus:outline-none focus:bg-green-100 transition duration-150 ease-in-out" value="{{$category->id}}">{{$category->name}}</option>
+                                        <option class="text-green-700 hover:bg-green-100 focus:outline-none focus:bg-green-100 transition duration-150 ease-in-out" value="{{$category->id}}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -76,7 +76,7 @@
                                 <x-label for="tag_id" :value="__('Tags')" class="mb-2" />
                                 <div class="grid grid-cols-6">
                                     @foreach ($tags as $tag)
-                                        <input type="checkbox" name="tag_id[]" value="{{$tag->id}}" id="{{$tag->name}}" class="@error('tag_id') is-invalid @enderror outline-none rounded-md mb-1"/>
+                                        <input type="checkbox" name="tag_id[]" value="{{$tag->id}}" id="{{$tag->name}}" {{ (is_array(old('tag_id')) && in_array($tag->id, old('tag_id'))) ? ' checked' : '' }} class="@error('tag_id') is-invalid @enderror outline-none rounded-md mb-1"/>
                                         <label for="{{$tag->name}}" class="col-span-2 font-medium text-sm text-green-300 mb-1">{{$tag->name}}</label>
                                     @endforeach
                                 </div>
